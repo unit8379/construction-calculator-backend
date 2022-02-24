@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Table(name="openings")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Opening {
 
     @Id
@@ -26,51 +27,10 @@ public class Opening {
     @Column(name="height")
     private double height;
 
-    public Opening(){
-
-    }
-
-    public Opening(String type, double width, double height){
-        this.type = type;
-        this.width = width;
-        this.height = height;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public double getWidth() {
-        return width;
-    }
-
-    public void setWidth(double width) {
-        this.width = width;
-    }
-
-    public double getHeight() {
-        return height;
-    }
-
-    public void setHeight(double height) {
-        this.height = height;
-    }
 
     @Override
     public String toString(){
-        return String.format("User [id=%s, stateId=%s, firstName=%s, lastName=%s, secondName=%s, phone=%s, email=%s, login=%s, password=%s]",
+        return String.format("Opening [id=%s, type=%s, width=%s, height=%s]",
                 id, type, width, height);
     }
 }
