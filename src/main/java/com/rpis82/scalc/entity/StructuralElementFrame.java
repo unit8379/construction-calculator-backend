@@ -7,11 +7,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name ="structural_element_frames")
+@Table(name="structural_element_frames")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class StructuralElementFrame
 {
     @Id
@@ -19,7 +18,7 @@ public class StructuralElementFrame
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name ="result_id")
     private Result resultId;
 
@@ -35,14 +34,14 @@ public class StructuralElementFrame
     @Column(name="perimeter_of_external_walls")
     private double perimeterOfExternalWalls;
 
-    @Column(name="base_Area")
+    @Column(name="base_area")
     private double baseArea;
 
-    @Column(name="external_wall_thidness")
-    private int externalWallThidness;
+    @Column(name="external_wall_thickness")
+    private int externalWallThickness;
 
-    @Column(name="internal_wall_lenght")
-    private int internalWallLenght;
+    @Column(name="internal_wall_length")
+    private int internalWallLength;
 
     @Column(name="internal_wall_thickness")
     private double internalWallThickness;

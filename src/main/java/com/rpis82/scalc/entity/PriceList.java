@@ -1,5 +1,7 @@
 package com.rpis82.scalc.entity;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,11 +17,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="results")
+@Table(name="price_lists")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Result {
+public class PriceList {
 	
 	@Id
 	@Column(name="id")
@@ -30,18 +32,12 @@ public class Result {
 	@JoinColumn(name="material_characteristic_id")
 	private MaterialCharacteristic materialCharacteristic;
 	
-	@Column(name="material")
-	private String material;
+	@Column(name="date")
+	private LocalDateTime date;
 	
-	@Column(name="amount")
-	private int amount;
+	@Column(name="purchase_price")
+	private double purchasePrice;
 	
-	@Column(name="measurement_unit")
-	private String measurementUnit;
-	
-	@Column(name="price")
-	private double price;
-	
-	@Column(name="full_price")
-	private double fullPrice;
+	@Column(name="selling_price")
+	private double sellingPrice;
 }

@@ -17,6 +17,10 @@ public class Material {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
 
+    @ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="material_characteristic_id")
+	private MaterialCharacteristic materialCharacteristic;
+    
     @Column(name="name")
     private String name;
 

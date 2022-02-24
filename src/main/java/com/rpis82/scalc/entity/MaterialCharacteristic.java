@@ -15,33 +15,37 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="results")
+@Table(name="material_characteristics")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Result {
-	
+public class MaterialCharacteristic {
+
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
 	@ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-	@JoinColumn(name="material_characteristic_id")
-	private MaterialCharacteristic materialCharacteristic;
+	@JoinColumn(name="measurement_unit_id")
+	private MeasurementUnit measurementUnit;
 	
-	@Column(name="material")
-	private String material;
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="material_id")
+	private Material material;
 	
-	@Column(name="amount")
-	private int amount;
+	@Column(name="name")
+	private String name;
 	
-	@Column(name="measurement_unit")
-	private String measurementUnit;
+	@Column(name="length")
+	private double length;
 	
-	@Column(name="price")
-	private double price;
+	@Column(name="width")
+	private double width;
 	
-	@Column(name="full_price")
-	private double fullPrice;
+	@Column(name="thickness")
+	private double thickness;
+	
+	@Column(name="volume")
+	private double volume;
 }
