@@ -18,21 +18,14 @@ public class OpeningInAStructuralElementFrame
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name ="structural_element_frame_id")
-    private int structuralElementFrameId;
+    private StructuralElementFrame structuralElementFrameId;
 
-    @ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="opening_id")
-    private int openingId;
+    private Opening openingId;
 
     @Column(name="amount")
     private int amount;
-
-    @Override
-    public String toString(){
-        return String.format("Openings_in_a_structural_element_frame [id=%s, structuralElementFrameId=%s, openingId=%s, amount=%s]",
-                id,structuralElementFrameId, openingId, amount);
-    }
-
 }

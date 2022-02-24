@@ -26,11 +26,4 @@ public class Opening {
 
     @Column(name="height")
     private double height;
-
-
-    @Override
-    public String toString(){
-        return String.format("Opening [id=%s, type=%s, width=%s, height=%s]",
-                id, type, width, height);
-    }
 }
