@@ -17,4 +17,7 @@ public class Opening_in_a_structural_element_frame
     @JoinColumn(name="opening_id")
     private Opening opening;
 
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "structural_element_frame_id")
+    prib
 }
