@@ -6,5 +6,5 @@ import com.rpis82.scalc.entity.MaterialCharacteristic;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MaterialCharacteristicRepository extends JpaRepository<MaterialRepository, Integer>{
+public interface MaterialCharacteristicRepository extends JpaRepository<MaterialCharacteristic, Integer>{
 }
