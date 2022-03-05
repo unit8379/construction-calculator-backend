@@ -1,5 +1,6 @@
 package com.rpis82.scalc.entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
@@ -36,8 +37,8 @@ public class PriceList {
 	private LocalDateTime date;
 	
 	@Column(name="purchase_price")
-	private double purchasePrice;
+	private BigDecimal purchasePrice;
 	
 	@Column(name="selling_price")
-	private double sellingPrice;
+	private BigDecimal sellingPrice;
 }

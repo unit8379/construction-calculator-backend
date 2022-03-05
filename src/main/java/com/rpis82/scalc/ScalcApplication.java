@@ -12,7 +12,7 @@ public class ScalcApplication {
 	public static void main(String[] args) {
 		ConfigurableApplicationContext context = SpringApplication.run(ScalcApplication.class, args);
 		
-		startMicroapp(context);
+		//startMicroapp(context); отключил микроприложение для тестирования Hibernate'а
 	}
 	
 	public static void startMicroapp(ConfigurableApplicationContext context) {		

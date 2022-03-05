@@ -162,7 +162,7 @@ CREATE TABLE `basement_structural_elements` (
   `concrete_piles` varchar(45) NOT NULL,
   `concrete` varchar(45) NOT NULL,
   
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`)
   
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -247,7 +247,7 @@ CREATE TABLE `structural_element_frames` (
   `insulation_thickness` varchar(100) NOT NULL,
   `OSB_internal_wall` varchar(100) NOT NULL,
   
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`)
 
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 

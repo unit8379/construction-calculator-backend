@@ -1,5 +1,7 @@
 package com.rpis82.scalc.entity;
 
+import java.math.BigDecimal;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -52,8 +54,8 @@ public class Result {
 	private String measurementUnit;
 	
 	@Column(name="price")
-	private double price;
+	private BigDecimal price;
 	
 	@Column(name="full_price")
-	private double fullPrice;
+	private BigDecimal fullPrice;
 }

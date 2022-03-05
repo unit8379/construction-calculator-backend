@@ -38,10 +38,10 @@ public class StructuralElementFrame
     private double baseArea;
 
     @Column(name="external_wall_thickness")
-    private int externalWallThickness;
+    private double externalWallThickness;
 
     @Column(name="internal_wall_length")
-    private int internalWallLength;
+    private double internalWallLength;
 
     @Column(name="internal_wall_thickness")
     private double internalWallThickness;
