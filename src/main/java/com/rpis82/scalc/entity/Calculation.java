@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -33,9 +32,9 @@ public class Calculation {
 	@JoinColumn(name="customer_id")
 	private Customer customer;
 	
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="result_id")
-	private Result result;
+//	@OneToOne(cascade=CascadeType.ALL)
+//	@JoinColumn(name="result_id")
+//	private Result result;
 	
 	@ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
 	@JoinColumn(name="calculation_state_id")

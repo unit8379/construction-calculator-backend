@@ -26,9 +26,9 @@ public class BasementStructuralElement {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
-	@ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-	@JoinColumn(name="result_id")
-	private Result result;
+//	@ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+//	@JoinColumn(name="result_id")
+//	private Result result;
 	
 	@Column(name="perimeter_of_external_walls")
 	private double perimeterOfExternalWalls;

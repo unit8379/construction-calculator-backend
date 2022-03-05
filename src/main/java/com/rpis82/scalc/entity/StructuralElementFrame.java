@@ -18,9 +18,9 @@ public class StructuralElementFrame
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name ="result_id")
-    private Result resultId;
+//    @ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+//    @JoinColumn(name ="result_id")
+//    private Result resultId;
 
     @Column(name="amount_floor")
     private int amountFloor;

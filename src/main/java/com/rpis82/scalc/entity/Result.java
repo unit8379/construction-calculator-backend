@@ -27,6 +27,18 @@ public class Result {
 	private int id;
 	
 	@ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+	@JoinColumn(name="calculation_id")
+	private Calculation calculation;
+	
+	@ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+	@JoinColumn(name="basement_structural_element_id")
+	private BasementStructuralElement basementStructuralElement;
+	
+	@ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+	@JoinColumn(name="structural_element_frame_id")
+	private StructuralElementFrame structuralElementFrame;
+	
+	@ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
 	@JoinColumn(name="material_characteristic_id")
 	private MaterialCharacteristic materialCharacteristic;
 	
