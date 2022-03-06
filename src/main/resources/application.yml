@@ -7,9 +7,9 @@ server:
 spring:
 
   datasource:
-    username: ''
-    password: ''
-    url: ''
+    username: ${JAWSDB_USERNAME}
+    password: ${JAWSDB_PASSWORD}
+    url: ${JAWSDB_URL}
 
   jpa:
     database-platform: 'org.hibernate.dialect.MySQL5InnoDBDialect'
