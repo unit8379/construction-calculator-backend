@@ -7,9 +7,9 @@ server:
 spring:
 
   datasource:
-    username: 'root'
-    password: 'poiuyt76G'
-    url: 'jdbc:mysql://localhost:3306/scalc?useSSL=false&serverTimezone=UTC'
+    username: ''
+    password: ''
+    url: ''
 
   jpa:
     database-platform: 'org.hibernate.dialect.MySQL5InnoDBDialect'
