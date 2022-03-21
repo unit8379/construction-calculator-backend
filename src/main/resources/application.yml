@@ -18,3 +18,8 @@ spring:
       ddl-auto: 'validate'
     show-sql: true
     open-in-view: true
+
+jwt:
+  token:
+    secret: 'jwtappdemo'
+    expired: 3600000

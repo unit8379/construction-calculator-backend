@@ -1,8 +1,4 @@
-DROP SCHEMA IF EXISTS `scalc`;
-
-CREATE SCHEMA `scalc`;
-
-use `scalc`;
+use `xi1mwc15m7pdpqe3`;
 
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -18,7 +14,7 @@ CREATE TABLE `users` (
   `phone` varchar(45) NOT NULL,
   `e_mail` varchar(45) NOT NULL,
   `login` varchar(45) NOT NULL,
-  `password` varchar(255) NOT NULL,
+  `password` varchar(45) NOT NULL,
   
   PRIMARY KEY (`id`),
   
@@ -299,10 +295,10 @@ CREATE TABLE `materials` (
 SET FOREIGN_KEY_CHECKS = 1;
 
 # Вставка "константных" записей в Статусы пользователя
-INSERT INTO `scalc`.`user_states` (`id`, `name`) VALUES (1, 'Числится в штате');
-INSERT INTO `scalc`.`user_states` (`id`, `name`) VALUES (2, 'Уволен');
+INSERT INTO `xi1mwc15m7pdpqe3`.`user_states` (`id`, `name`) VALUES (1, 'Числится в штате');
+INSERT INTO `xi1mwc15m7pdpqe3`.`user_states` (`id`, `name`) VALUES (2, 'Уволен');
 
 # Вставка "константных записей" в Статусы расчёта
-INSERT INTO `scalc`.`calculation_states` (`id`, `name`) VALUES (1, 'Актуален');
-INSERT INTO `scalc`.`calculation_states` (`id`, `name`) VALUES (2, 'Не актуален');
-INSERT INTO `scalc`.`calculation_states` (`id`, `name`) VALUES (3, 'Заключён договор');
+INSERT INTO `xi1mwc15m7pdpqe3`.`calculation_states` (`id`, `name`) VALUES (1, 'Актуален');
+INSERT INTO `xi1mwc15m7pdpqe3`.`calculation_states` (`id`, `name`) VALUES (2, 'Не актуален');
+INSERT INTO `xi1mwc15m7pdpqe3`.`calculation_states` (`id`, `name`) VALUES (3, 'Заключён договор');

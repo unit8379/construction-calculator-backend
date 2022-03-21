@@ -2,6 +2,7 @@ package com.rpis82.scalc.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,15 +22,20 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@PostMapping
-	public User create(@RequestBody User userToSave) {
-		userToSave.setUserState(new UserState("В штате"));
-		return userService.create(userToSave);
+	@PostMapping("/register")
+	public User register(@RequestBody User userToSave) {
+		return userService.register(userToSave);
 	}
 	
 	@GetMapping
 	public String hello() {
 		return "it's working!";
+	}
+	
+	// для примера. в самом приложении пока не нужен
+	@GetMapping("/{userId}")
+	public User getStudent(@PathVariable int userId) {
+		return userService.findById(userId);
 	}
 	
 //  Это я проверял POST запросы с обычными параметрами. Пока что оставил в комментариях для общего развития.
