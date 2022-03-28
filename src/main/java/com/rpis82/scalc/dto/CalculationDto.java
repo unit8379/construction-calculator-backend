@@ -2,6 +2,7 @@ package com.rpis82.scalc.dto;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.rpis82.scalc.entity.Calculation;
 import com.rpis82.scalc.entity.CalculationState;
@@ -12,10 +13,12 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CalculationDto {
 	private int id;
+	@JsonIgnore
 	private CalculationState calculationState;
 	private int number;
 	private LocalDateTime createdDate;
 	private String constructionObjectAddress;
+	private String stateName;
 	
 	public Calculation toCalculation() {
 		Calculation calculation = new Calculation();
@@ -38,4 +41,5 @@ public class CalculationDto {
 		
 		return calculationDto;
 	}
+	
 }

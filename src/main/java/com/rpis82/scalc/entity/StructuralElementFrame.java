@@ -26,7 +26,7 @@ public class StructuralElementFrame
     private int amountFloor;
 
     @Column(name="floor_number")
-    private int floor_number;
+    private int floorNumber;
 
     @Column(name="floor_height")
     private int floorHeight;
@@ -59,19 +59,19 @@ public class StructuralElementFrame
     private String insulationExternalWall;
 
     @Column(name="overlap_thickness")
-    private String overlapThickness;
+    private double overlapThickness;
 
-    @Column(name="OSB_thickness")
-    private String osbThickness;
+    @Column(name="OSB_overlap")
+    private String osbOverlap;
 
-    @Column(name="steam_waterproofing_thickness")
-    private String steamWaterproofingThickness;
+    @Column(name="steam_waterproofing_overlap")
+    private String steamWaterproofingOverlap;
 
-    @Column(name="windscreen_thickness")
-    private String windscreenThickness;
+    @Column(name="windscreen_overlap")
+    private String windscreenOverlap;
 
-    @Column(name="insulation_thickness")
-    private String insulationThickness;
+    @Column(name="insulation_overlap")
+    private String insulationOverlap;
 
     @Column(name="OSB_internal_wall")
     private String osbInternalWall;

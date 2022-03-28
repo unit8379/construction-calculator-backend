@@ -240,11 +240,11 @@ CREATE TABLE `structural_element_frames` (
   `steam_waterproofing_external_wall` varchar(100) NOT NULL,
   `windscreen_external_wall` varchar(100) NOT NULL,
   `insulation_external_wall` varchar(100) NOT NULL,
-  `overlap_thickness` varchar(100) NOT NULL,
-  `OSB_thickness` varchar(100) NOT NULL,
-  `steam_waterproofing_thickness` varchar(100) NOT NULL,
-  `windscreen_thickness` varchar(100) NOT NULL,
-  `insulation_thickness` varchar(100) NOT NULL,
+  `overlap_thickness` double NOT NULL,
+  `OSB_overlap` varchar(100) NOT NULL,
+  `steam_waterproofing_overlap` varchar(100) NOT NULL,
+  `windscreen_overlap` varchar(100) NOT NULL,
+  `insulation_overlap` varchar(100) NOT NULL,
   `OSB_internal_wall` varchar(100) NOT NULL,
   
   PRIMARY KEY (`id`)
@@ -271,7 +271,7 @@ CREATE TABLE `price_lists` (
 
 DROP TABLE IF EXISTS `measurement_units`;
 
-# Единицы измерения
+# Единицы измерений
 CREATE TABLE `measurement_units` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
@@ -306,3 +306,10 @@ INSERT INTO `scalc`.`user_states` (`id`, `name`) VALUES (2, 'Уволен');
 INSERT INTO `scalc`.`calculation_states` (`id`, `name`) VALUES (1, 'Актуален');
 INSERT INTO `scalc`.`calculation_states` (`id`, `name`) VALUES (2, 'Не актуален');
 INSERT INTO `scalc`.`calculation_states` (`id`, `name`) VALUES (3, 'Заключён договор');
+
+# Вставка "константных записей" в Единицы измерений
+INSERT INTO `scalc`.`measurement_units` (`id`, `name`) VALUES (1, 'м3');
+INSERT INTO `scalc`.`measurement_units` (`id`, `name`) VALUES (2, 'м2');
+
+# Вставка "константных записей" в 
+INSERT INTO `scalc`.`measurement_units` (`id`, `name`) VALUES (1, 'м3');

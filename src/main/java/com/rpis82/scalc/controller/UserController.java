@@ -34,7 +34,7 @@ public class UserController {
 	
 	// для примера. в самом приложении пока не нужен
 	@GetMapping("/{userId}")
-	public User getStudent(@PathVariable int userId) {
+	public User getUser(@PathVariable int userId) {
 		return userService.findById(userId);
 	}
 	
