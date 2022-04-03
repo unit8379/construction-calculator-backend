@@ -46,7 +46,7 @@ CREATE TABLE `groups` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `users_group`;
+DROP TABLE IF EXISTS `users_groups`;
 
 # Пользователь-группа
 CREATE TABLE `users_groups` (
@@ -125,11 +125,8 @@ CREATE TABLE `results` (
   `calculation_id` int NOT NULL,
   `basement_structural_element_id` int NULL,
   `structural_element_frame_id` int NULL,
-  `material_characteristic_id` int NOT NULL,
-  `material` varchar(50) NOT NULL,
-  `amount` int NOT NULL,
-  `measurement_unit` varchar(45) NOT NULL,
-  `price` decimal(15,2) NOT NULL,
+  `material_id` int NOT NULL,
+  `amount` double NOT NULL,
   `full_price` decimal(15,2) NOT NULL,
   
   PRIMARY KEY (`id`),
@@ -146,9 +143,9 @@ CREATE TABLE `results` (
   CONSTRAINT `FK_FRAME_1` FOREIGN KEY (`structural_element_frame_id`) 
   REFERENCES `structural_element_frames` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   
-  KEY `FK_CHARACTERISTIC_idx` (`material_characteristic_id`),
-  CONSTRAINT `FK_CHARACTERISTIC_1` FOREIGN KEY (`material_characteristic_id`) 
-  REFERENCES `material_characteristics` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `FK_MATERIAL_idx` (`material_id`),
+  CONSTRAINT `FK_MATERIAL_1` FOREIGN KEY (`material_id`) 
+  REFERENCES `materials` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
   
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -163,31 +160,6 @@ CREATE TABLE `basement_structural_elements` (
   `concrete` varchar(45) NOT NULL,
   
   PRIMARY KEY (`id`)
-  
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS `material_characteristics`;
-
-# Характеристики материала
-CREATE TABLE `material_characteristics` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `measurement_unit_id` int NOT NULL,
-  `material_id` int NOT NULL,
-  `name` varchar(45) NOT NULL,
-  `length` double NOT NULL,
-  `width` double NOT NULL,
-  `thickness` double NOT NULL,
-  `volume` double NOT NULL,
-  
-  PRIMARY KEY (`id`),
-  
-  KEY `FK_MATERIAL_idx` (`material_id`),
-  CONSTRAINT `FK_MATERIAL` FOREIGN KEY (`material_id`) 
-  REFERENCES `materials` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  
-  KEY `FK_MESUREMENT_UNIT_idx` (`measurement_unit_id`),
-  CONSTRAINT `FK_MESUREMENT_UNIT` FOREIGN KEY (`measurement_unit_id`) 
-  REFERENCES `measurement_units` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
   
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -251,24 +223,6 @@ CREATE TABLE `structural_element_frames` (
 
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `price_lists`;
-
-# Прайс-листы
-CREATE TABLE `price_lists` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `material_characteristic_id` int NOT NULL,
-  `date` datetime NOT NULL,
-  `purchase_price` decimal(15,2) NOT NULL,
-  `selling_price` decimal(15,2) NOT NULL,
-
-  PRIMARY KEY (`id`),
-
-  KEY `FK_CHARACTERISTIC_idx` (`material_characteristic_id`),
-  CONSTRAINT `FK_CHARACTERISTIC_2` FOREIGN KEY (`material_characteristic_id`) 
-  REFERENCES `material_characteristics` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
 DROP TABLE IF EXISTS `measurement_units`;
 
 # Единицы измерений
@@ -283,16 +237,17 @@ DROP TABLE IF EXISTS `materials`;
 # Материалы
 CREATE TABLE `materials` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `material_characteristic_id` int NOT NULL,
+  `measurement_unit_id` int NOT NULL,
   `name`  varchar(100) NOT NULL,
   `material_type` varchar(100) NOT NULL,
+  `price` double NOT NULL,
   `structural_element_type` varchar(100) NOT NULL,
   
   PRIMARY KEY (`id`),
   
-  KEY `FK_CHARACTERISTIC_idx` (`material_characteristic_id`),
-  CONSTRAINT `FK_CHARACTERISTIC_3` FOREIGN KEY (`material_characteristic_id`) 
-  REFERENCES `material_characteristics` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `FK_MESUREMENT_UNIT_idx` (`measurement_unit_id`),
+  CONSTRAINT `FK_MESUREMENT_UNIT` FOREIGN KEY (`measurement_unit_id`) 
+  REFERENCES `measurement_units` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -311,5 +266,89 @@ INSERT INTO `scalc`.`calculation_states` (`id`, `name`) VALUES (3, 'Заключ
 INSERT INTO `scalc`.`measurement_units` (`id`, `name`) VALUES (1, 'м3');
 INSERT INTO `scalc`.`measurement_units` (`id`, `name`) VALUES (2, 'м2');
 
-# Вставка "константных записей" в 
-INSERT INTO `scalc`.`measurement_units` (`id`, `name`) VALUES (1, 'м3');
+# Вставка "константных записей" в Материалы
+INSERT INTO `scalc`.`materials` (`id`, `measurement_unit_id`, `name`, `material_type`, `price`, `structural_element_type`)
+	VALUES (1, 1, 'Доска 50*100*3000', 'Пиломатериал', 12000, 'Каркас');
+
+INSERT INTO `scalc`.`materials` (`id`, `measurement_unit_id`, `name`, `material_type`, `price`, `structural_element_type`)
+    VALUES (2, 1, 'Доска 50*150*3000', 'Пиломатериал', 12000, 'Каркас');
+
+INSERT INTO `scalc`.`materials` (`id`, `measurement_unit_id`, `name`, `material_type`, `price`, `structural_element_type`)
+    VALUES (3, 1, 'Доска 50*200*3000', 'Пиломатериал', 12000, 'Каркас');
+
+INSERT INTO `scalc`.`materials` (`id`, `measurement_unit_id`, `name`, `material_type`, `price`, `structural_element_type`)
+    VALUES (4, 1, 'Доска 50*250*3000', 'Пиломатериал', 12000, 'Каркас');
+
+INSERT INTO `scalc`.`materials` (`id`, `measurement_unit_id`, `name`, `material_type`, `price`, `structural_element_type`)
+    VALUES (5, 1, 'Доска 50*300*3000', 'Пиломатериал', 12000, 'Каркас');
+
+INSERT INTO `scalc`.`materials` (`id`, `measurement_unit_id`, `name`, `material_type`, `price`, `structural_element_type`)
+    VALUES (6, 1, 'Доска 50*100*6000', 'Пиломатериал', 12000, 'Каркас');
+
+INSERT INTO `scalc`.`materials` (`id`, `measurement_unit_id`, `name`, `material_type`, `price`, `structural_element_type`)
+    VALUES (7, 1, 'Доска 50*150*6000', 'Пиломатериал', 12000, 'Каркас');
+
+INSERT INTO `scalc`.`materials` (`id`, `measurement_unit_id`, `name`, `material_type`, `price`, `structural_element_type`)
+    VALUES (8, 1, 'Доска 50*200*6000', 'Пиломатериал', 12000, 'Каркас');
+
+INSERT INTO `scalc`.`materials` (`id`, `measurement_unit_id`, `name`, `material_type`, `price`, `structural_element_type`)
+    VALUES (9, 1, 'Доска 50*250*6000', 'Пиломатериал', 12000, 'Каркас');
+
+INSERT INTO `scalc`.`materials` (`id`, `measurement_unit_id`, `name`, `material_type`, `price`, `structural_element_type`)
+    VALUES (10, 1, 'Доска 50*300*6000', 'Пиломатериал', 12000, 'Каркас');
+
+INSERT INTO `scalc`.`materials` (`id`, `measurement_unit_id`, `name`, `material_type`, `price`, `structural_element_type`)
+    VALUES (11, 2, 'OSB 9 мм', 'OSB', 256, 'Каркас');
+
+INSERT INTO `scalc`.`materials` (`id`, `measurement_unit_id`, `name`, `material_type`, `price`, `structural_element_type`)
+    VALUES (12, 2, 'OSB 10 мм', 'OSB', 288, 'Каркас');
+
+INSERT INTO `scalc`.`materials` (`id`, `measurement_unit_id`, `name`, `material_type`, `price`, `structural_element_type`)
+    VALUES (13, 2, 'OSB 15 мм', 'OSB', 384, 'Каркас');
+
+INSERT INTO `scalc`.`materials` (`id`, `measurement_unit_id`, `name`, `material_type`, `price`, `structural_element_type`)
+    VALUES (14, 2, 'OSB 18 мм', 'OSB', 480, 'Каркас');
+
+INSERT INTO `scalc`.`materials` (`id`, `measurement_unit_id`, `name`, `material_type`, `price`, `structural_element_type`)
+    VALUES (15, 1, 'Кнауф ТеплоКнауф 100 мм', 'Утеплитель', 3000, 'Каркас');
+
+INSERT INTO `scalc`.`materials` (`id`, `measurement_unit_id`, `name`, `material_type`, `price`, `structural_element_type`)
+    VALUES (16, 1, 'Технониколь 100 мм', 'Утеплитель', 3500, 'Каркас');
+
+INSERT INTO `scalc`.`materials` (`id`, `measurement_unit_id`, `name`, `material_type`, `price`, `structural_element_type`)
+    VALUES (17, 1, 'Эковер 100 мм', 'Утеплитель', 2800, 'Каркас');
+
+INSERT INTO `scalc`.`materials` (`id`, `measurement_unit_id`, `name`, `material_type`, `price`, `structural_element_type`)
+    VALUES (18, 1, 'Эковер 150 мм', 'Утеплитель', 2800, 'Каркас');
+
+INSERT INTO `scalc`.`materials` (`id`, `measurement_unit_id`, `name`, `material_type`, `price`, `structural_element_type`)
+    VALUES (19, 1, 'Эковер 200 мм', 'Утеплитель', 2800, 'Каркас');
+
+INSERT INTO `scalc`.`materials` (`id`, `measurement_unit_id`, `name`, `material_type`, `price`, `structural_element_type`)
+    VALUES (20, 1, 'Фасад 200 мм', 'Утеплитель', 3200, 'Каркас');
+
+INSERT INTO `scalc`.`materials` (`id`, `measurement_unit_id`, `name`, `material_type`, `price`, `structural_element_type`)
+    VALUES (21, 1, 'Эковер 250 мм', 'Утеплитель', 2800, 'Каркас');
+
+INSERT INTO `scalc`.`materials` (`id`, `measurement_unit_id`, `name`, `material_type`, `price`, `structural_element_type`)
+    VALUES (22, 2, 'Ондутис', 'Пароизоляция', 33, 'Каркас');
+
+INSERT INTO `scalc`.`materials` (`id`, `measurement_unit_id`, `name`, `material_type`, `price`, `structural_element_type`)
+    VALUES (23, 2, 'Пароизоляция Axton (b)', 'Пароизоляция', 20, 'Каркас');
+
+# здесь Н русская "эн"
+INSERT INTO `scalc`.`materials` (`id`, `measurement_unit_id`, `name`, `material_type`, `price`, `structural_element_type`)
+    VALUES (24, 2, 'Пароизоляционная плёнка Ютафол Н 96 Сильвер', 'Пароизоляция', 21, 'Каркас');
+
+INSERT INTO `scalc`.`materials` (`id`, `measurement_unit_id`, `name`, `material_type`, `price`, `structural_element_type`)
+    VALUES (25, 2, 'Пароизоляция B', 'Пароизоляция', 11, 'Каркас');
+
+INSERT INTO `scalc`.`materials` (`id`, `measurement_unit_id`, `name`, `material_type`, `price`, `structural_element_type`)
+    VALUES (26, 2, 'Ветро-влагозащитная мембрана Brane A', 'Ветрозащита', 57, 'Каркас');
+
+INSERT INTO `scalc`.`materials` (`id`, `measurement_unit_id`, `name`, `material_type`, `price`, `structural_element_type`)
+    VALUES (27, 2, 'Паропроницаемая ветро-влагозащита A Optima', 'Ветрозащита', 21, 'Каркас');
+
+# здесь А русская
+INSERT INTO `scalc`.`materials` (`id`, `measurement_unit_id`, `name`, `material_type`, `price`, `structural_element_type`)
+    VALUES (28, 2, 'Гидро-ветрозащита Тип А', 'Ветрозащита', 53, 'Каркас');

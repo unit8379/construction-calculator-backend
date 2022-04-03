@@ -41,20 +41,11 @@ public class Result {
 	private StructuralElementFrame structuralElementFrame;
 	
 	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="material_characteristic_id")
-	private MaterialCharacteristic materialCharacteristic;
-	
-	@Column(name="material")
-	private String material;
+	@JoinColumn(name="material_id")
+	private Material material;
 	
 	@Column(name="amount")
-	private int amount;
-	
-	@Column(name="measurement_unit")
-	private String measurementUnit;
-	
-	@Column(name="price")
-	private BigDecimal price;
+	private double amount;
 	
 	@Column(name="full_price")
 	private BigDecimal fullPrice;

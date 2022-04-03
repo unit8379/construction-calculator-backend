@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rpis82.scalc.dto.CustomerDto;
+import com.rpis82.scalc.dto.UserDto;
 import com.rpis82.scalc.entity.Customer;
 import com.rpis82.scalc.service.CustomerService;
 
@@ -30,7 +32,7 @@ public class CustomerController {
 	}
 	
 	@GetMapping
-	public List<CustomerDto> getAll() {
+	public ResponseEntity getAll() {
 		List<Customer> result = customerService.getAll();
 		List<CustomerDto> toResponse = new ArrayList<>();
 		
@@ -38,6 +40,6 @@ public class CustomerController {
 			toResponse.add(CustomerDto.fromCustomer(el));
 		}
 		
-		return toResponse;
+		return ResponseEntity.ok(toResponse);
 	}
 }

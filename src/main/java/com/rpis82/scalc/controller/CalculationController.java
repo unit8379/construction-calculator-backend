@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rpis82.scalc.dto.CalculationDto;
+import com.rpis82.scalc.dto.ResultsDto;
 import com.rpis82.scalc.dto.StructuralElementFrameDto;
 import com.rpis82.scalc.entity.Calculation;
 import com.rpis82.scalc.entity.Customer;
@@ -72,14 +73,15 @@ public class CalculationController {
 	// добавить в расчёт результаты связанные с переданной информацией
 	// по структурному элементу "Каркас"
 	@PostMapping(value = {"/seframe/{calculationId}", "/seframe"})
-	public Calculation addSEFrameIntoCalculation(
+	public List<ResultsDto> addSEFrameIntoCalculation(
 			@PathVariable(name="calculationId", required=false)
 			Integer calculationId,
 			@RequestBody
 			List<StructuralElementFrameDto> SEFrameDtos)
 	{
-		calculationService.addSEFrame(calculationId, SEFrameDtos);
-		return null;
+		// todo если calculationId не пришёл, то создать пустой расчёт и передать его далее в добавление SEFrame
+
+		return calculationService.addSEFrame(calculationId, SEFrameDtos);
 	}
 	
 }

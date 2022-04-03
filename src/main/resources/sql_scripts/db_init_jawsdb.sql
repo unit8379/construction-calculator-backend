@@ -42,7 +42,7 @@ CREATE TABLE `groups` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `users_group`;
+DROP TABLE IF EXISTS `users_groups`;
 
 # Пользователь-группа
 CREATE TABLE `users_groups` (
@@ -236,11 +236,11 @@ CREATE TABLE `structural_element_frames` (
   `steam_waterproofing_external_wall` varchar(100) NOT NULL,
   `windscreen_external_wall` varchar(100) NOT NULL,
   `insulation_external_wall` varchar(100) NOT NULL,
-  `overlap_thickness` varchar(100) NOT NULL,
-  `OSB_thickness` varchar(100) NOT NULL,
-  `steam_waterproofing_thickness` varchar(100) NOT NULL,
-  `windscreen_thickness` varchar(100) NOT NULL,
-  `insulation_thickness` varchar(100) NOT NULL,
+  `overlap_thickness` double NOT NULL,
+  `OSB_overlap` varchar(100) NOT NULL,
+  `steam_waterproofing_overlap` varchar(100) NOT NULL,
+  `windscreen_overlap` varchar(100) NOT NULL,
+  `insulation_overlap` varchar(100) NOT NULL,
   `OSB_internal_wall` varchar(100) NOT NULL,
   
   PRIMARY KEY (`id`)
@@ -267,7 +267,7 @@ CREATE TABLE `price_lists` (
 
 DROP TABLE IF EXISTS `measurement_units`;
 
-# Единицы измерения
+# Единицы измерений
 CREATE TABLE `measurement_units` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
@@ -302,3 +302,7 @@ INSERT INTO `yx65aofxq4pqo3j0`.`user_states` (`id`, `name`) VALUES (2, 'Увол
 INSERT INTO `yx65aofxq4pqo3j0`.`calculation_states` (`id`, `name`) VALUES (1, 'Актуален');
 INSERT INTO `yx65aofxq4pqo3j0`.`calculation_states` (`id`, `name`) VALUES (2, 'Не актуален');
 INSERT INTO `yx65aofxq4pqo3j0`.`calculation_states` (`id`, `name`) VALUES (3, 'Заключён договор');
+
+# Вставка "константных записей" в Единицы измерений
+INSERT INTO `yx65aofxq4pqo3j0`.`measurement_units` (`id`, `name`) VALUES (1, 'м3');
+INSERT INTO `yx65aofxq4pqo3j0`.`measurement_units` (`id`, `name`) VALUES (2, 'м2');
