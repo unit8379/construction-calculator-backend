@@ -58,7 +58,10 @@ public class AuthenticationRestControllerV1 {
 
             return ResponseEntity.ok(response);
         } catch (AuthenticationException e) {
-            throw new BadCredentialsException("Invalid username or password");
+        	//throw new BadCredentialsException("Invalid username or password");
+            Map<Object, Object> response = new HashMap<>();
+            response.put("message", "Неправильное имя пользователя или пароль.");
+            return ResponseEntity.ok(response);
         }
     }
 }

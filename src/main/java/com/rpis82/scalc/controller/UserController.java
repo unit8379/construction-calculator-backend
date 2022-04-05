@@ -1,6 +1,14 @@
 package com.rpis82.scalc.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,8 +31,31 @@ public class UserController {
 	private UserService userService;
 	
 	@PostMapping("/register")
-	public User register(@RequestBody User userToSave) {
-		return userService.register(userToSave);
+	public ResponseEntity register(@RequestBody User userToSave) {
+		try {
+			Map<Object, Object> response = new HashMap<>();
+			
+            User user = userService.findByLogin(userToSave.getLogin());
+            if (user != null) {
+            	response.put("message", "Пользователь с данным логином уже существует.");
+            	return ResponseEntity.ok(response);
+            }
+            
+            user = userService.findByEmail(userToSave.getEmail());
+            if (user != null) {
+            	response.put("message", "Пользователь с данной электронной почтой уже существует.");
+            	return ResponseEntity.ok(response);
+            }
+            
+            userService.register(userToSave);
+            response.put("message", "Пользователь успешно зарегистрирован.");
+            return ResponseEntity.ok(response);
+            
+        } catch (Exception e) {
+        	Map<Object, Object> response = new HashMap<>();
+        	response.put("message", "Ошибка на стороне сервера.");
+            return ResponseEntity.ok(response);
+        }
 	}
 	
 	@GetMapping

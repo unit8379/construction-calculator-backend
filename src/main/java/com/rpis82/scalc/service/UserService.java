@@ -58,6 +58,12 @@ public class UserService {
 		return result;
 	}
 	
+	public User findByEmail(String email) {
+		User result = userRepository.findByEmail(email);
+		log.info("IN findByEmail - user: {} found by email: {}", result, email);
+		return result;
+	}
+	
 	public List<User> getAll() {
 		List<User> result = userRepository.findAll();
 		log.info("IN getAll - {} users found", result.size());
