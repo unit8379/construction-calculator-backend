@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -38,13 +39,13 @@ public class UserController {
             User user = userService.findByLogin(userToSave.getLogin());
             if (user != null) {
             	response.put("message", "Пользователь с данным логином уже существует.");
-            	return ResponseEntity.ok(response);
+            	return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
             }
             
             user = userService.findByEmail(userToSave.getEmail());
             if (user != null) {
             	response.put("message", "Пользователь с данной электронной почтой уже существует.");
-            	return ResponseEntity.ok(response);
+            	return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
             }
             
             userService.register(userToSave);
@@ -54,7 +55,7 @@ public class UserController {
         } catch (Exception e) {
         	Map<Object, Object> response = new HashMap<>();
         	response.put("message", "Ошибка на стороне сервера.");
-            return ResponseEntity.ok(response);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
 	}
 	

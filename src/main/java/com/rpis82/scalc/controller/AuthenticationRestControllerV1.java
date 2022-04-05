@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -61,7 +62,8 @@ public class AuthenticationRestControllerV1 {
         	//throw new BadCredentialsException("Invalid username or password");
             Map<Object, Object> response = new HashMap<>();
             response.put("message", "Неправильное имя пользователя или пароль.");
-            return ResponseEntity.ok(response);
+            
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
         }
     }
 }
