@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.rpis82.scalc.dto.ResultsDto;
 import com.rpis82.scalc.dto.StructuralElementFrameDto;
@@ -27,6 +28,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Transactional
 @AllArgsConstructor
 @Slf4j
 public class CalculationService {
@@ -62,9 +64,38 @@ public class CalculationService {
 	public void delete(int calculationId) {
 		Calculation calculationToDelete = calculationRepository.getById(calculationId);
 		resultRepository.deleteAllByCalculation(calculationToDelete);
+		calculationRepository.deleteById(calculationId);
+	}
+	
+	public void update(int calculationId, Calculation updatedInfo) {
+		Calculation calculationToUpdate = calculationRepository.getById(calculationId);
+		calculationToUpdate.setConstructionObjectAddress(updatedInfo.getConstructionObjectAddress());
+		calculationToUpdate.setCreatedDate(updatedInfo.getCreatedDate());
+		calculationToUpdate.setNumber(updatedInfo.getNumber());
+	}
+	
+	public List<ResultsDto> getResults(int calculationId) {
+		// получение списка Result для данного расчёта
+		Calculation calculation = calculationRepository.getById(calculationId);
+		List<Result> results = resultRepository.findAllByCalculation(calculation);
+		
+		// упаковка результатов в список удобных дто объектов
+		List<ResultsDto> dtos = new ArrayList();
+		for (int i = 0; i < results.get(0).getStructuralElementFrame().getAmountFloor(); ++i) {
+			ResultsDto dto = new ResultsDto();
+			dto.toResultsDto(results, i + 1);
+			dtos.add(dto);
+		}
+		
+		return dtos;
 	}
 	
 	public List<ResultsDto> addSEFrame(Integer calculationId, List<StructuralElementFrameDto> SEFrameDtos) {
+		// Удаление прошлых результатов по данному расчёту, если они были.
+		// Таким образом, данный метод работает как для добавления так и для обновления даннных по каркасу в расчёте.
+		Calculation calculationToDelete = calculationRepository.getById(calculationId);
+		resultRepository.deleteAllByCalculation(calculationToDelete);
+		
 		List<StructuralElementFrame> framesToProcess = new ArrayList();
 		
 		for (StructuralElementFrameDto dto : SEFrameDtos) {

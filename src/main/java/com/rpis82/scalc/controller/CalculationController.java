@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,7 +50,7 @@ public class CalculationController {
 	}
 	
 	// создать новый пустой расчёт
-	@PostMapping(value = "/{customerId}")
+	@PostMapping(value = "/create/{customerId}")
 	public CalculationDto create(@PathVariable(name="customerId") int customerId,
 			@RequestBody Calculation calculationToCreate) {
 		
@@ -64,23 +65,35 @@ public class CalculationController {
 		return toReturn;
 	}
 	
+	// обновить расчёт
+	@PostMapping(value = "/update/{calculationId}")
+	public void update(@PathVariable(name="calculationId") int calculationId,
+			@RequestBody Calculation updatedInfo) {
+			
+			calculationService.update(calculationId, updatedInfo);
+	} 
+	
 	// удалить всё, что связано с указанным расчётом и его самого
 	@DeleteMapping(value = "/delete/{calculationId}")
 	public void delete(@PathVariable(name="calculationId") int calculationId) {
 		calculationService.delete(calculationId);
 	}
 	
+	// получение списка результатов по конкретному расчёту
+	@GetMapping(value = {"/results/{calculationId}"})
+	public List<ResultsDto> getResults(@PathVariable(name="calculationId") int calculationId) {
+		return calculationService.getResults(calculationId);
+	}
+	
 	// добавить в расчёт результаты связанные с переданной информацией
 	// по структурному элементу "Каркас"
-	@PostMapping(value = {"/seframe/{calculationId}", "/seframe"})
+	@PostMapping(value = {"/seframe/{calculationId}"})
 	public List<ResultsDto> addSEFrameIntoCalculation(
 			@PathVariable(name="calculationId", required=false)
 			Integer calculationId,
 			@RequestBody
 			List<StructuralElementFrameDto> SEFrameDtos)
 	{
-		// todo если calculationId не пришёл, то создать пустой расчёт и передать его далее в добавление SEFrame
-
 		return calculationService.addSEFrame(calculationId, SEFrameDtos);
 	}
 	

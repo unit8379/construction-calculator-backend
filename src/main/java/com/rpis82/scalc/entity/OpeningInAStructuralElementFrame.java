@@ -18,7 +18,7 @@ public class OpeningInAStructuralElementFrame
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name ="structural_element_frame_id")
     private StructuralElementFrame structuralElementFrameId;
 

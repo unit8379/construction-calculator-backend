@@ -28,7 +28,7 @@ public class Result {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
 	@JoinColumn(name="calculation_id")
 	private Calculation calculation;
 	
@@ -40,7 +40,7 @@ public class Result {
 	@JoinColumn(name="structural_element_frame_id")
 	private StructuralElementFrame structuralElementFrame;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
 	@JoinColumn(name="material_id")
 	private Material material;
 	
