@@ -54,10 +54,26 @@ public class CalculationService {
 		return result;
 	}
 	
+	public Calculation getOne(int calculationId) {
+		return calculationRepository.getById(calculationId);
+	}
+	
+	public Calculation changeState(int calculationId) {
+		Calculation calculation = calculationRepository.getById(calculationId);
+		
+		if (calculation.getCalculationState().getId() == 1) {
+			calculation.setCalculationState(calculationStateRepository.getById(2));
+		} else if (calculation.getCalculationState().getId() == 2) {
+			calculation.setCalculationState(calculationStateRepository.getById(1));
+		}
+		
+		return calculation;
+	}
+	
 	public Calculation create(Calculation calculationToCreate) {
 		
-		// пока что по умолчанию статус "Актуален"
-		calculationToCreate.setCalculationState(calculationStateRepository.getById(1));
+		// по умолчанию статус "Не актуален"
+		calculationToCreate.setCalculationState(calculationStateRepository.getById(2));
 		return calculationRepository.save(calculationToCreate);
 	}
 	

@@ -38,6 +38,7 @@ public class CalculationDto {
 		calculationDto.setNumber(calculation.getNumber());
 		calculationDto.setCreatedDate(calculation.getCreatedDate());
 		calculationDto.setConstructionObjectAddress(calculation.getConstructionObjectAddress());
+		calculationDto.setStateName(calculation.getCalculationState().getName());
 		
 		return calculationDto;
 	}

@@ -49,6 +49,19 @@ public class CalculationController {
 		return toResponse;
 	}
 	
+	// получить один расчёт по его id
+	@GetMapping(value = "/one/{calculationId}")
+	public CalculationDto getOne(@PathVariable(name="calculationId") int calculationId) {
+		CalculationDto calcToReturn = CalculationDto.fromCalculation(calculationService.getOne(calculationId));
+		return calcToReturn;
+	}
+	
+	// Изменить статус расчёта на противоположный
+	@PutMapping(value = "/state/{calculationId}")
+	public CalculationDto changeCalculationState(@PathVariable(name="calculationId") int calculationId) {
+		return CalculationDto.fromCalculation(calculationService.changeState(calculationId));
+	}
+	
 	// создать новый пустой расчёт
 	@PostMapping(value = "/create/{customerId}")
 	public CalculationDto create(@PathVariable(name="customerId") int customerId,
