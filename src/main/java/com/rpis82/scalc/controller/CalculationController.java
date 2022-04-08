@@ -83,8 +83,15 @@ public class CalculationController {
 	public void update(@PathVariable(name="calculationId") int calculationId,
 			@RequestBody Calculation updatedInfo) {
 			
-			calculationService.update(calculationId, updatedInfo);
-	} 
+		calculationService.update(calculationId, updatedInfo);
+	}
+	
+	// скопировать расчёт
+	@GetMapping(value = "/copy/{calculationId}")
+	public CalculationDto copy(@PathVariable(name="calculationId") int calculationId) {
+		
+		return CalculationDto.fromCalculation(calculationService.copy(calculationId));
+	}
 	
 	// удалить всё, что связано с указанным расчётом и его самого
 	@DeleteMapping(value = "/delete/{calculationId}")

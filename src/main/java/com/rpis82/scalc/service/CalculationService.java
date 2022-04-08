@@ -15,6 +15,7 @@ import com.rpis82.scalc.dto.StructuralElementFrameDto;
 import com.rpis82.scalc.entity.Calculation;
 import com.rpis82.scalc.entity.Customer;
 import com.rpis82.scalc.entity.Material;
+import com.rpis82.scalc.entity.Opening;
 import com.rpis82.scalc.entity.OpeningInAStructuralElementFrame;
 import com.rpis82.scalc.entity.Result;
 import com.rpis82.scalc.entity.StructuralElementFrame;
@@ -75,6 +76,72 @@ public class CalculationService {
 		// по умолчанию статус "Не актуален"
 		calculationToCreate.setCalculationState(calculationStateRepository.getById(2));
 		return calculationRepository.save(calculationToCreate);
+	}
+	
+	public Calculation copy(int calculationId) {
+		Calculation calcToCopy = calculationRepository.getById(calculationId);
+		List<Result> resultsToCopy = resultRepository.findAllByCalculation(calcToCopy);
+		List<StructuralElementFrame> framesToCopy = new ArrayList<>();
+		
+		int amountFloor = resultsToCopy.get(0).getStructuralElementFrame().getAmountFloor();
+		for (int i = 0, j = 0; i != amountFloor; j++) {
+			if (resultsToCopy.get(j).getStructuralElementFrame().getFloorNumber() > i) {
+				framesToCopy.add(resultsToCopy.get(j).getStructuralElementFrame());
+				i++;
+			}
+		}
+		
+		List<StructuralElementFrameDto> dtos = new ArrayList<>();
+		for (int i = 0; i < amountFloor; ++i) {
+			StructuralElementFrameDto dto = new StructuralElementFrameDto();
+			List<Opening> openings = new ArrayList<>();
+			List<Integer> amounts = new ArrayList<>();
+			
+			for (OpeningInAStructuralElementFrame op : openingInASEFrameRepository.findAllByStructuralElementFrameId(framesToCopy.get(i))) {
+				Opening opening = new Opening();
+				opening.setType(op.getOpeningId().getType());
+				opening.setWidth(op.getOpeningId().getWidth());
+				opening.setHeight(op.getOpeningId().getHeight());
+				
+				openings.add(opening);
+				amounts.add(op.getAmount());
+			}
+			
+			dto.setOpenings(openings);
+			dto.setAmounts(amounts);
+			dto.setAmountFloor(framesToCopy.get(i).getAmountFloor());
+			dto.setFloorNumber(framesToCopy.get(i).getFloorNumber());
+			dto.setFloorHeight(framesToCopy.get(i).getFloorHeight());
+			dto.setPerimeterOfExternalWalls(framesToCopy.get(i).getPerimeterOfExternalWalls());
+			dto.setBaseArea(framesToCopy.get(i).getBaseArea());
+			dto.setExternalWallThickness(framesToCopy.get(i).getExternalWallThickness());
+			dto.setInternalWallLength(framesToCopy.get(i).getInternalWallLength());
+			dto.setInternalWallThickness(framesToCopy.get(i).getInternalWallThickness());
+			dto.setOsbExternalWall(framesToCopy.get(i).getOsbExternalWall());
+			dto.setSteamWaterproofingExternalWall(framesToCopy.get(i).getSteamWaterproofingExternalWall());
+			dto.setWindscreenExternalWall(framesToCopy.get(i).getWindscreenExternalWall());
+			dto.setInsulationExternalWall(framesToCopy.get(i).getInsulationExternalWall());
+			dto.setOsbInternalWall(framesToCopy.get(i).getOsbInternalWall());
+			dto.setOverlapThickness(framesToCopy.get(i).getOverlapThickness());
+			dto.setOsbOverlap(framesToCopy.get(i).getOsbOverlap());
+			dto.setSteamWaterproofingOverlap(framesToCopy.get(i).getSteamWaterproofingOverlap());
+			dto.setWindscreenOverlap(framesToCopy.get(i).getWindscreenOverlap());
+			dto.setInsulationOverlap(framesToCopy.get(i).getInsulationOverlap());
+			
+			dtos.add(dto);
+		}
+		
+		Calculation copiedCalculation = new Calculation();
+		copiedCalculation.setConstructionObjectAddress(calcToCopy.getConstructionObjectAddress());
+		copiedCalculation.setCreatedDate(calcToCopy.getCreatedDate());
+		copiedCalculation.setCustomer(calcToCopy.getCustomer());
+		copiedCalculation.setNumber(calcToCopy.getNumber());
+		copiedCalculation.setCalculationState(calculationStateRepository.getById(2));
+		calculationRepository.save(copiedCalculation);
+		
+		addSEFrame(copiedCalculation.getId(), dtos);
+		
+		return copiedCalculation;
 	}
 	
 	public void delete(int calculationId) {
